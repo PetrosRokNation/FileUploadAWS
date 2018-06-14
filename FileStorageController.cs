@@ -63,7 +63,7 @@ namespace FutureOfLatinos.Web.Controllers.Api
                     {
                         model.FileTypeId = 8;
                     }
-                     //Logic needed in order to separate filetypeId in correct type because this is more specific to documents...
+                     
                     model.UserFileName = fileName;
                     model.SystemFileName = newFileName;
                     model.Location = "https://sabio-training.s3.us-west-2.amazonaws.com/C53/" + newFileName;
