@@ -24,7 +24,7 @@ namespace FutureOfLatinos.Web.Controllers.Api
     public class FileStorageController : ApiController
     {
         private static readonly log4net.ILog log = LogHelper.GetLogger();
-        private string bucketname = "sabio-training/C53";
+        private string bucketname = "bucketname";
         private IAmazonS3 awsS3Client = new AmazonS3Client(Amazon.RegionEndpoint.USWest2);
         private IFileStorageService _fileStorageService;
         private IPrincipal _principal;
@@ -49,24 +49,14 @@ namespace FutureOfLatinos.Web.Controllers.Api
                     request.Key = newFileName;
                     request.InputStream = st;
                     log.Debug(newFileName + "uploading to AWS S3");
-                    utility.Upload(request); //File Streamed to AWS
+                    utility.Upload(request); 
 
                     FileStorageAddRequest model = new FileStorageAddRequest();
                     IUserAuthData currentUser = _principal.Identity.GetCurrentUser();
-
-                    if(extension == ".jpg" || extension == ".jpeg" || extension == ".png" ||
-                       extension == ".gif" || extension == ".bmp" || extension == ".svg")
-                    {
-                        model.FileTypeId = 1;
-                    }
-                    else 
-                    {
-                        model.FileTypeId = 8;
-                    }
                      
                     model.UserFileName = fileName;
                     model.SystemFileName = newFileName;
-                    model.Location = "https://sabio-training.s3.us-west-2.amazonaws.com/C53/" + newFileName;
+                    model.Location = "URL" + newFileName;
                     model.CreatedBy = currentUser.Name;
                     int id = _fileStorageService.Insert(model);
                     ItemResponse<int> resp = new ItemResponse<int>();
